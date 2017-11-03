@@ -1,0 +1,21 @@
+library(shiny)
+library(randomForest)
+churn=read.csv("churn.csv")
+churn$Area.Code=NULL
+churn$Phone=NULL
+churn$State=as.numeric(churn$State)
+rf=randomForest(Churn~Account.Length+VMail.Message+Day.Mins+Eve.Mins+Night.Mins+Intl.Mins+CustServ.Calls+Intl.Plan+VMail.Plan+Day.Calls+Day.Charge+Eve.Calls+Eve.Charge+Night.Calls+Night.Charge+Intl.Calls+Intl.Charge+State,churn,mtry=6,max_depth=7,ntree=500)
+pred_churn<-function(Account.Length,VMail.Message,Day.Mins,Eve.Mins,Night.Mins,Intl.Mins,CustServ.Calls,Intl.Plan,VMail.Plan,Day.Calls,Day.Charge,Eve.Calls,Eve.Charge,Night.Calls,Night.Charge,Intl.Calls,Intl.Charge,State){
+  inputdata<-c(Account.Length,VMail.Message,Day.Mins,Eve.Mins,Night.Mins,Intl.Mins,CustServ.Calls,Intl.Plan,VMail.Plan,Day.Calls,Day.Charge,Eve.Calls,Eve.Charge,Night.Calls,Night.Charge,Intl.Calls,Intl.Charge,State)
+  pred_data<-as.data.frame(t(inputdata))
+  colnames(pred_data)<-c("Account.Length","VMail.Message","Day.Mins","Eve.Mins","Night.Mins","Intl.Mins","CustServ.Calls","Intl.Plan","VMail.Plan","Day.Calls","Day.Charge","Eve.Calls","Eve.Charge","Night.Calls","Night.Charge","Intl.Calls","Intl.Charge","State")
+  churn_prob<-predict(rf,pred_data)
+  churn_prob1<-round(churn_prob*100,digits = 2)
+  return(churn_prob1)
+}
+shinyServer(
+  function(input,output){
+    output$prob<-renderText({
+      pred_churn(input$Account.Length,input$VMail.Plan,input$Day.Mins,input$Eve.Mins,input$Night.Mins,input$Intl.Mins,input$CustServ.Calls,input$Intl.Plan,input$VMail.Plan,input$Day.Calls,input$Day.Charge,input$Eve.Calls,input$Eve.Charge,input$Night.Calls,input$Night.Charge,input$Intl.Calls,input$Intl.Charge,as.numeric(input$State))
+    })
+    })

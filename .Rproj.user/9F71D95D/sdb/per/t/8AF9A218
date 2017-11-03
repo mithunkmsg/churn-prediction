@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(shiny)\nlibrary(randomForest)\nchurn=read.csv(\"churn.csv\")\nchurn$Area.Code=NULL\nchurn$Phone=NULL\nchurn$State=as.numeric(churn$State)\nrf=randomForest(Churn~Account.Length+VMail.Message+Day.Mins+Eve.Mins+Night.Mins+Intl.Mins+CustServ.Calls+Intl.Plan+VMail.Plan+Day.Calls+Day.Charge+Eve.Calls+Eve.Charge+Night.Calls+Night.Charge+Intl.Calls+Intl.Charge+State,churn,mtry=6,max_depth=7,ntree=500)\npred_churn<-function(Account.Length,VMail.Message,Day.Mins,Eve.Mins,Night.Mins,Intl.Mins,CustServ.Calls,Intl.Plan,VMail.Plan,Day.Calls,Day.Charge,Eve.Calls,Eve.Charge,Night.Calls,Night.Charge,Intl.Calls,Intl.Charge,State){\n  inputdata<-c(Account.Length,VMail.Message,Day.Mins,Eve.Mins,Night.Mins,Intl.Mins,CustServ.Calls,Intl.Plan,VMail.Plan,Day.Calls,Day.Charge,Eve.Calls,Eve.Charge,Night.Calls,Night.Charge,Intl.Calls,Intl.Charge,State)\n  pred_data<-as.data.frame(t(inputdata))\n  colnames(pred_data)<-c(\"Account.Length\",\"VMail.Message\",\"Day.Mins\",\"Eve.Mins\",\"Night.Mins\",\"Intl.Mins\",\"CustServ.Calls\",\"Intl.Plan\",\"VMail.Plan\",\"Day.Calls\",\"Day.Charge\",\"Eve.Calls\",\"Eve.Charge\",\"Night.Calls\",\"Night.Charge\",\"Intl.Calls\",\"Intl.Charge\",\"State\")\n  churn_prob<-predict(rf,pred_data)\n  churn_prob1<-round(churn_prob*100,digits = 2)\n  return(churn_prob1)\n}\nshinyServer(\n  function(input,output){\n    output$prob<-renderText({\n      pred_churn(input$Account.Length,input$VMail.Plan,input$Day.Mins,input$Eve.Mins,input$Night.Mins,input$Intl.Mins,input$CustServ.Calls,input$Intl.Plan,input$VMail.Plan,input$Day.Calls,input$Day.Charge,input$Eve.Calls,input$Eve.Charge,input$Night.Calls,input$Night.Charge,input$Intl.Calls,input$Intl.Charge,as.numeric(input$State))\n    })\n    })\n",
+    "created" : 1509521520543.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2467956031",
+    "id" : "8AF9A218",
+    "lastKnownWriteTime" : 1505645515,
+    "last_content_update" : 1505645515,
+    "path" : "D:/R/R project/churn customer project/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

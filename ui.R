@@ -1,0 +1,32 @@
+library(shiny)
+shinyUI(
+  pageWithSidebar(
+    headerPanel(title=div(h3("PROBABILITY CHURN CUSTOMER OF A MOBILE TELECOM COMPANY",align="center"),style="color:Green"),windowTitle = "MOB TELECOM CHURN CUSTOMER"),
+    sidebarPanel(
+      p("Fill the below details:"),
+      selectInput("State","1. Please select the state:",choices = c("AK"=1,"AL"=2,"AR"=3,"AZ"=4, "CA"=5,"CO"=6,"CT"=7,"DC"=8,"DE"=9,"FL"=10,"GA"=11,"HI"=12,"IA"=13,"ID"=14,"IL"=15,"IN"=16,"KS"=17,"KY"=18,"LA"=19,"MA"=20,"MD"=21,"ME"=22,"MI"=23,"MN"=24,"MO"=25,"MS"=26,"MT"=27,"NC"=28,"ND"=29,"NE"=30,"NH"=31,"NJ"=32,"NM"=33,"NV"=34,"NY"=35,"OH"=36,"OK"=37,"OR"=38,"PA"=39,"RI"=40,"SC"=41,"SD"=42,"TN"=43,"TX"=44,"UT"=45,"VA"=46,"VT"=47,"WA"=48,"WI"=49,"WV"=50,"WY"=51)),
+      numericInput("Account.Length","2. Please Enter Account length:",min = 0,max = 1000,value = 124),
+      numericInput("VMail.Message","3. Please Enter Vmail Message: ",min = 0,max = 1000,value=25 ),
+      numericInput("Day.Mins","4. Please Enter Day Min:",min = 0,max = 1000,value=265.1),
+      numericInput("Eve.Mins","5. Please Enter Eve Mins:",min = 0,max = 1000,value=197.4),
+      numericInput("Night.Mins","6. Please Enter Night Mins:",min = 0,max = 1000,value=244.7),
+      numericInput("Intl.Mins","7. Please Enter Intl Mins:",min = 0,max = 1000,10.0),
+      numericInput("CustServ.Calls","8. Please Enter CustServ Calls:",min = 0,max = 1000,value=1),
+      numericInput("Intl.Plan","9. Please Enter Intl Plan:",min = 0,max = 1000,value=0),
+      numericInput("VMail.Plan","10. Please Enter VMail Plan:",min = 0,max = 1000,value=1),
+      numericInput("Day.Calls","11. Please Enter Day Calls:",min = 0,max = 1000,value=110),
+      numericInput("Day.Charge","12. Please Enter Day Charges:",min=0,max=10000,value=45.07),
+      numericInput("Eve.Calls","13. Please Enter Eve Calls:",min=0,max = 1000,value=99),
+      numericInput("Eve.Charge","14. Please Enter Eve Charges:",min=0,max = 1000,value=16.78),
+      numericInput("Night.Calls","15. Please Enter Night Calls:",min = 0,max = 1000,91),
+      numericInput( "Night.Charge","16. Please Enter Night Charges:",min = 0,max = 1000,value=11.01),
+      numericInput( "Intl.Calls","17. Please Enter Intl Calls:",min = 0,max = 1000,value=3),
+      numericInput( "Intl.Charge","18. Please Enter Intl Charges:",min = 0,max = 1000,value = 20.05)
+    ),
+    mainPanel(
+      h3("Churn customer probabilities:"),
+      h4(textOutput('prob')),
+      p("Please note that this is estimated percentage probalities of a customer getting churn")
+    )
+  )
+)
