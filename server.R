@@ -4,7 +4,7 @@ Churn=read.csv("Churn.csv")
 Churn$Area.Code=NULL
 Churn$Phone=NULL
 Churn$State=as.numeric(Churn$State)
-rf=randomForest(Churn~Account.Length+VMail.Message+Day.Mins+Eve.Mins+Night.Mins+Intl.Mins+CustServ.Calls+Intl.Plan+VMail.Plan+Day.Calls+Day.Charge+Eve.Calls+Eve.Charge+Night.Calls+Night.Charge+Intl.Calls+Intl.Charge+State,churn,mtry=6,max_depth=7,ntree=500)
+rf=randomForest(Churn~Account.Length+VMail.Message+Day.Mins+Eve.Mins+Night.Mins+Intl.Mins+CustServ.Calls+Intl.Plan+VMail.Plan+Day.Calls+Day.Charge+Eve.Calls+Eve.Charge+Night.Calls+Night.Charge+Intl.Calls+Intl.Charge+State,Churn,mtry=6,max_depth=7,ntree=500)
 pred_churn<-function(Account.Length,VMail.Message,Day.Mins,Eve.Mins,Night.Mins,Intl.Mins,CustServ.Calls,Intl.Plan,VMail.Plan,Day.Calls,Day.Charge,Eve.Calls,Eve.Charge,Night.Calls,Night.Charge,Intl.Calls,Intl.Charge,State){
   inputdata<-c(Account.Length,VMail.Message,Day.Mins,Eve.Mins,Night.Mins,Intl.Mins,CustServ.Calls,Intl.Plan,VMail.Plan,Day.Calls,Day.Charge,Eve.Calls,Eve.Charge,Night.Calls,Night.Charge,Intl.Calls,Intl.Charge,State)
   pred_data<-as.data.frame(t(inputdata))
